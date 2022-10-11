@@ -1,13 +1,13 @@
 import React from 'react';
 
 const Card = ({ children }) => {
-    return <div className={'shadow rounded-lg overflow-hidden bg-white'}>{children}</div>;
+    return <div className={'shadow rounded-lg overflow-hidden bg-neutral-500'}>{children}</div>;
 };
 
 const Title = ({ children }) => {
     return (
         <div className={'p-4 border-b'}>
-            <h1 className={'text-xl p-4'}>{children}</h1>
+            <h1 className={'text-xl text-blue-800 p-4'}>{children}</h1>
         </div>
     );
 };
