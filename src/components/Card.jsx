@@ -1,13 +1,13 @@
 import React from 'react';
 
 const Card = ({ children }) => {
-    return <div className={'shadow rounded-lg overflow-hidden bg-neutral-500'}>{children}</div>;
+    return <div className={'shadow rounded-lg overflow-hidden bg-emerald-600'}>{children}</div>;
 };
 
 const Title = ({ children }) => {
     return (
         <div className={'p-4 border-b'}>
-            <h1 className={'text-xl text-blue-800 p-4'}>{children}</h1>
+            <h1 className={'text-xl font-semibold text-sky-900 p-4'}>{children}</h1>
         </div>
     );
 };
@@ -17,7 +17,7 @@ const Body = ({ children }) => {
 };
 
 const Footer = ({ children }) => {
-    return <div className={'bg-slate-50 p-4'}>{children}</div>;
+    return <div className={'bg-green-800 p-4'}>{children}</div>;
 };
 
 Card.Title = Title;

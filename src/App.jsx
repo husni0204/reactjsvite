@@ -1,11 +1,12 @@
 import { IconBrandFacebook, IconBrandGithub, IconBrandTwitter, IconBrandYoutube } from '@tabler/icons';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from './components/Button';
 import Card from './components/Card';
 import Counter from './components/Counter';
 import Input from './components/Input';
 import Label from './components/Label';
 import PlaceContentCenter from './components/PlaceContentCenter';
+import Todo from './components/Todo';
 
 const App = () => {
     const type = 'submit';
@@ -14,7 +15,7 @@ const App = () => {
     const [form, setForm] = useState({
         name: '',
         email: '',
-    })
+    });
 
     function onChange(event) {
         setForm({ ...form, [event.target.name]: event.target.value });
@@ -23,7 +24,19 @@ const App = () => {
     const submit = (event) => {
         event.preventDefault();
         console.log(form);
-    }
+    };
+
+    const inputRef = useRef(null);
+    // const [tick, setTick] = useState(0);
+
+    const handleClick = () => {
+        inputRef.current.focus();
+        // tick.current = tick.current + 1;
+        // console.log(tick.current);
+        // const nextTick = tick + 1;
+        // setTick(nextTick);
+        // console.log(nextTick);
+    };
 
     return (
         <>
@@ -92,6 +105,20 @@ const App = () => {
                             </Button>
                         </Card.Footer>
                     </form>
+                </Card>
+            </PlaceContentCenter>
+            <PlaceContentCenter>
+                <Todo />
+            </PlaceContentCenter>
+            <PlaceContentCenter>
+                <Card>
+                    <Card.Title>useRef Hooks</Card.Title>
+                    <Card.Body>
+                        <Input placeholder={'email'} isFocused className={'border border-slate-500'} />
+                        <Input placeholder={'password'} className={'border border-slate-500'} />
+                        <Button onClick={handleClick}>Tick</Button>
+                    </Card.Body>
+                    {/* <Card.Footer>You clicked {tick.current} times.</Card.Footer> */}
                 </Card>
             </PlaceContentCenter>
         </>
