@@ -1,5 +1,6 @@
 import { IconBrandFacebook, IconBrandGithub, IconBrandTwitter, IconBrandYoutube } from '@tabler/icons';
-import { useRef, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
 import Button from './components/Button';
 import Card from './components/Card';
 import Counter from './components/Counter';
@@ -11,6 +12,34 @@ import Todo from './components/Todo';
 const App = () => {
     const type = 'submit';
     const onClick = () => console.log('Login with another style');
+
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [jokes, setJokes] = useState('');
+
+    useEffect(() => {
+        const getJoke = async () => {
+            const { data } = await axios.get(`https://api.chucknorris.io/jokes/random?name=Husni`);
+            console.log('data jokes', data);
+            setJokes(data);
+        };
+        getJoke().then((r) => r);
+    }, []);
+
+    useEffect(() => {
+        async function getUsers() {
+            setLoading(true);
+            try {
+                const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
+                setUsers(data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error.message);
+                setLoading(false);
+            }
+        }
+        getUsers().then((r) => r);
+    }, []);
 
     const [form, setForm] = useState({
         name: '',
@@ -119,6 +148,30 @@ const App = () => {
                         <Button onClick={handleClick}>Tick</Button>
                     </Card.Body>
                     {/* <Card.Footer>You clicked {tick.current} times.</Card.Footer> */}
+                </Card>
+            </PlaceContentCenter>
+            <PlaceContentCenter>
+                <Card>
+                    <Card.Title>Users : {users.length}</Card.Title>
+                    <Card.Body>
+                        {loading ? (
+                            <div>Loading brooo...</div>
+                        ) : (
+                            <ol>
+                                {users.map((user) => (
+                                    <li key={user.id}>
+                                        {user.name} - {user.username}
+                                    </li>
+                                ))}
+                            </ol>
+                        )}
+                    </Card.Body>
+                </Card>
+            </PlaceContentCenter>
+            <PlaceContentCenter>
+                <Card>
+                    <Card.Title>Joke</Card.Title>
+                    <Card.Body>{jokes.value}</Card.Body>
                 </Card>
             </PlaceContentCenter>
         </>
