@@ -8,23 +8,22 @@ import Input from './components/Input';
 import Label from './components/Label';
 import PlaceContentCenter from './components/PlaceContentCenter';
 import Todo from './components/Todo';
+import useJoke from './hooks/use.Joke';
 
 const App = () => {
     const type = 'submit';
     const onClick = () => console.log('Login with another style');
 
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [jokes, setJokes] = useState('');
+    const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        const getJoke = async () => {
-            const { data } = await axios.get(`https://api.chucknorris.io/jokes/random?name=Husni`);
-            console.log('data jokes', data);
-            setJokes(data);
-        };
-        getJoke().then((r) => r);
-    }, []);
+    const namaRef = useRef('')
+    const [nama, setNama] = useState('Rezky')
+    const jokes = useJoke(nama)
+    const generateJoke = (e) => {
+        e.preventDefault()
+        setNama(namaRef.current.value) 
+    }
 
     useEffect(() => {
         async function getUsers() {
@@ -171,7 +170,15 @@ const App = () => {
             <PlaceContentCenter>
                 <Card>
                     <Card.Title>Joke</Card.Title>
-                    <Card.Body>{jokes.value}</Card.Body>
+                    <Card.Body>
+                        <p className={'mb-4'}>
+                            {jokes.value}
+                        </p>
+                        <Input ref={namaRef} />
+                    </Card.Body>
+                    <Card.Footer>
+                        <Button onClick={generateJoke}>Generate a Joke</Button>
+                    </Card.Footer>
                 </Card>
             </PlaceContentCenter>
         </>
